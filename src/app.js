@@ -9,10 +9,12 @@ var viewer = new Cesium.Viewer('cesiumContainer');
 // dragon http://localhost:8003/oulu/tilesets/dragon
 var tileset = viewer.scene.primitives.add(new Cesium.Cesium3DTileset({
     url : 'http://localhost:8003/oulu/tilesets/sample',
+    maximumScreenSpaceError: 1000,
     debugShowBoundingVolume: true,
     debugShowGeometricError: true,
     debugColorizeTiles: true,
-    debugShowRenderingStatistics: true
+    debugShowRenderingStatistics: true,
+    debugShowUrl: true
 }));
 
 tileset.loadProgress.addEventListener(function(numberOfPendingRequests, numberOfTilesProcessing) {
