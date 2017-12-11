@@ -6,19 +6,18 @@ var Cesium = require('cesium/Cesium');
 Cesium.BingMapsApi.defaultKey = "AiMlFcA_DUmJ-ShjLpX_mudqS6LFGw4r1rcCrYanKfSVTiOpmcFoNwEqKo04okVH";
 
 var viewer = new Cesium.Viewer('cesiumContainer');
-axios.get("http://localhost:8003/oulu/api/city/59fae4f73730003a7c10e6a3")
+axios.get("http://localhost:8008/oulu/api/city/59fae4f73730003a7c10e6a3")
     .then(function (response) {
-        var url = "http://localhost:8003" + response.data.url;
+        var url = "http://localhost:8008" + response.data.url;
+        //var url = "http://localhost:8003/tilesets/TilesetWithDiscreteLOD/";
         console.log(url);
         var tileset = viewer.scene.primitives.add(new Cesium.Cesium3DTileset({
             url: url,
-            skipLevels: 0,
             debugShowBoundingVolume: true,
             debugShowGeometricError: true,
             debugColorizeTiles: true,
             debugShowRenderingStatistics: true,
-            debugShowUrl: true,
-            debugWireframe: true
+            debugShowUrl: true
         }));
 
         tileset.loadProgress.addEventListener(function (numberOfPendingRequests, numberOfTilesProcessing) {
