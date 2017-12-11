@@ -9,15 +9,16 @@ var viewer = new Cesium.Viewer('cesiumContainer');
 axios.get("http://localhost:8003/oulu/api/city/59fae4f73730003a7c10e6a3")
     .then(function (response) {
         var url = "http://localhost:8003" + response.data.url;
+        console.log(url);
         var tileset = viewer.scene.primitives.add(new Cesium.Cesium3DTileset({
             url: url,
-            maximumScreenSpaceError: 1000,
+            skipLevels: 0,
             debugShowBoundingVolume: true,
             debugShowGeometricError: true,
             debugColorizeTiles: true,
             debugShowRenderingStatistics: true,
             debugShowUrl: true,
-            skipLevelOfDetail: false
+            debugWireframe: true
         }));
 
         tileset.loadProgress.addEventListener(function (numberOfPendingRequests, numberOfTilesProcessing) {
@@ -29,13 +30,11 @@ axios.get("http://localhost:8003/oulu/api/city/59fae4f73730003a7c10e6a3")
         });
 
         tileset.readyPromise.then(function (tileset) {
+            console.log(tileset);
             console.log(viewer.scene.primitives);
             viewer.camera.viewBoundingSphere(tileset.boundingSphere, new Cesium.HeadingPitchRange(0, -0.5, 0));
             viewer.camera.lookAtTransform(Cesium.Matrix4.IDENTITY);
         })
-        .catch(function(error) {
-            console.log(error);
-        });
 
     })
     .catch(function (error) {
