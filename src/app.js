@@ -10,7 +10,6 @@ axios.get("http://localhost:8008/oulu/api/city/59fae4f73730003a7c10e6a3")
     .then(function (response) {
         var url = "http://localhost:8008" + response.data.url;
         //var url = "http://localhost:8003/tilesets/TilesetWithDiscreteLOD/";
-        console.log(url);
         var tileset = viewer.scene.primitives.add(new Cesium.Cesium3DTileset({
             url: url,
             debugShowBoundingVolume: true,
@@ -29,11 +28,13 @@ axios.get("http://localhost:8008/oulu/api/city/59fae4f73730003a7c10e6a3")
         });
 
         tileset.readyPromise.then(function (tileset) {
-            console.log(tileset);
-            console.log(viewer.scene.primitives);
-            viewer.camera.viewBoundingSphere(tileset.boundingSphere, new Cesium.HeadingPitchRange(0, -0.5, 0));
+            var boundingSphere = tileset.boundingSphere;
+            viewer.camera.viewBoundingSphere(boundingSphere, new Cesium.HeadingPitchRange(0.0, -0.5, boundingSphere.radius / 4.0));
             viewer.camera.lookAtTransform(Cesium.Matrix4.IDENTITY);
-        })
+
+            /*var transform = Cesium.Transforms.headingPitchRollToFixedFrame(center, new Cesium.HeadingPitchRoll());
+            tileset._root.transform = transform;*/
+        });
 
     })
     .catch(function (error) {

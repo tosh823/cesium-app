@@ -25,6 +25,6 @@
   },
   "dependencies": {
     "axios": "^0.17.1",
-    "cesium": "http://cesium-dev.s3-website-us-east-1.amazonaws.com/cesium/master/cesium-1.38.0.tgz"
+    "cesium": "^1.41.0"
   }
 }
