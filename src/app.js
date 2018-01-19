@@ -14,7 +14,6 @@ axios.get("http://localhost:8008/oulu/api/city/59fae4f73730003a7c10e6a3")
             url: url,
             debugShowBoundingVolume: true,
             debugShowGeometricError: true,
-            debugColorizeTiles: true,
             debugShowRenderingStatistics: true,
             debugShowUrl: true
         }));
@@ -29,11 +28,12 @@ axios.get("http://localhost:8008/oulu/api/city/59fae4f73730003a7c10e6a3")
 
         tileset.readyPromise.then(function (tileset) {
             var boundingSphere = tileset.boundingSphere;
+            var center = boundingSphere.center;
+            var transform = Cesium.Transforms.headingPitchRollToFixedFrame(center, new Cesium.HeadingPitchRoll());
+            tileset.modelMatrix = transform;
+
             viewer.camera.viewBoundingSphere(boundingSphere, new Cesium.HeadingPitchRange(0.0, -0.5, boundingSphere.radius / 4.0));
             viewer.camera.lookAtTransform(Cesium.Matrix4.IDENTITY);
-
-            /*var transform = Cesium.Transforms.headingPitchRollToFixedFrame(center, new Cesium.HeadingPitchRoll());
-            tileset._root.transform = transform;*/
         });
 
     })
