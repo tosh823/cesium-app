@@ -30,6 +30,8 @@ axios.get("http://localhost:8008/oulu/api/city/59fae4f73730003a7c10e6a3")
             var boundingSphere = tileset.boundingSphere;
             var center = boundingSphere.center;
             var transform = Cesium.Transforms.headingPitchRollToFixedFrame(center, new Cesium.HeadingPitchRoll());
+            var move = new Cesium.Cartesian3(0, 0, -23);
+            Cesium.Matrix4.multiplyByTranslation(transform, move, transform);
             tileset.modelMatrix = transform;
 
             viewer.camera.viewBoundingSphere(boundingSphere, new Cesium.HeadingPitchRange(0.0, -0.5, boundingSphere.radius / 4.0));
